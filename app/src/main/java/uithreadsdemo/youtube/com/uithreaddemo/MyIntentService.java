@@ -38,6 +38,7 @@ public class MyIntentService extends JobService {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.i(getString(R.string.service_demo_tag),"Do background: "+jobParameters.getJobId());
                 mIsRandomGeneratorOn =true;
                 startRandomNumberGenerator();
             }
@@ -58,8 +59,8 @@ public class MyIntentService extends JobService {
     }
 
     private void startRandomNumberGenerator(){
-        int counter=0;
-        while (counter<5){
+
+        while (mIsRandomGeneratorOn){
             try{
                 Thread.sleep(1000);
                 if(mIsRandomGeneratorOn){
@@ -71,7 +72,7 @@ public class MyIntentService extends JobService {
             }catch (InterruptedException e){
                 Log.i(getString(R.string.service_demo_tag),"Thread Interrupted");
             }
-            counter++;
+
         }
         this.jobFinished(jobParameters,true);
     }
